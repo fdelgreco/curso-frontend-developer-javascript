@@ -2,13 +2,16 @@ const tocarMail = document.querySelector (".navbar-email")
 const desktopMenu = document.querySelector (".desktop-menu")
 const menuHam = document.querySelector (".menu")
 const mobileMenu = document.querySelector (".mobile-menu")
+const productDetailCloseIcon = document.querySelector (".product-detail-close")
 const carritoCompra = document.querySelector (".navbar-shopping-cart")
-const productDetail = document.querySelector (".product-detail")
+const productDetail = document.querySelector ("#shoppingCartContainer")
+const productDetailContainer = document.querySelector ("#productDetail")
 const cardsContainer = document.querySelector (".cards-container")
 
 tocarMail.addEventListener ("click", toggleDesktopMenu)
 menuHam.addEventListener ("click", showMenu)
 carritoCompra.addEventListener ("click", showShopping)
+productDetailCloseIcon.addEventListener ("click", closeProductDetailAside)
 
 function toggleDesktopMenu () {
     const isProductDetailClosed = productDetail.classList.contains ("inactive")  
@@ -22,29 +25,41 @@ function toggleDesktopMenu () {
 }
 
 function showMenu () {
-const isProductDetailClosed = productDetail.classList.contains ("inactive")
+    const isProductDetailClosed = productDetail.classList.contains ("inactive")
 
-if (!isProductDetailClosed) {
-    productDetail.classList.add ("inactive")
-}
+    if (!isProductDetailClosed) {
+        productDetail.classList.add ("inactive")
+    }
 
     mobileMenu.classList.toggle ("inactive")
 }
 
 function showShopping (){
-const isMobileMenuClosed = mobileMenu.classList.contains ("inactive")
-const isDesktopMenu = desktopMenu.classList.contains ("inactive")
+    const isMobileMenuClosed = mobileMenu.classList.contains ("inactive")
+    const isDesktopMenu = desktopMenu.classList.contains ("inactive")
+    const isProductDetailClosed = productDetailContainer.classList.contains ("inactive")
 
+    if (!isMobileMenuClosed) {
+        mobileMenu.classList.add ("inactive")
+    }
 
-if (!isMobileMenuClosed) {
-    mobileMenu.classList.add ("inactive")
+    if (!isDesktopMenu) {
+        desktopMenu.classList.add ("inactive")
+    }
+
+    if (!isProductDetailClosed) {
+        productDetailContainer.classList.add ("inactive")
+
+        productDetail.classList.toggle ("inactive")
+    }
 }
-if (!isDesktopMenu) {
-    desktopMenu.classList.add ("inactive")
+
+function openProductDetailAside() {
+    productDetailContainer.classList.remove("inactive")
 }
 
-
-productDetail.classList.toggle ("inactive")
+function closeProductDetailAside () {
+    productDetailContainer.classList.add("inactive")
 }
 
 const productList = []
@@ -111,6 +126,7 @@ divProductCard.classList.add ("product-card")
 
 const imgProduct = document.createElement ("img")
 imgProduct.setAttribute ("src", product.imagen)
+imgProduct.addEventListener ("click", openProductDetailAside)
 
 const divProductInfo = document.createElement ("div")
 divProductInfo.classList.add ("product-info")
